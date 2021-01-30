@@ -12,9 +12,9 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    
-<!-- font awesome cdn -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+
+    <!-- font awesome cdn -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
@@ -55,29 +55,31 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="firstInputCount" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                    <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick="ticketPriceCalculation('firstInputCount',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick="ticketPriceCalculation('firstInputCount',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="secondInputCount" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
-                    <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                    <button class="btn btn-default"><i class="fas fa-plus"></i></button> </div> </div>
+                    <button onclick="ticketPriceCalculation('secondInputCount',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick="ticketPriceCalculation('secondInputCount',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                     </div>
+            </div>
             <div class="calculations">
                 <div class="amount">
                     <div class="left">
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p id="totalCost">$00</p>
                     </div>
                 </div>
 
@@ -86,7 +88,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p id="totalVat">$00</p>
                     </div>
                 </div>
                 <hr>
@@ -95,20 +97,70 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p id="total">$00</p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="checkout" class="btn-style">Book Now</button>
         </div>
 
         <div class="booking-content">
             <h1>discover <br> around the world</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias
+                veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
+                voluptatibus quam</p>
         </div>
-    </section>
+        </section>
 
-    
+        <script>
+            function ticketPriceCalculation(id, isIncrease) {
+                const ticketInput = document.getElementById(id);
+                const ticketCount = parseInt(ticketInput.value);
+                let ticketNewCount = ticketCount;
+                if (isIncrease == true) {
+                    ticketNewCount = ticketCount + 1;
+                }
+                if (isIncrease == false && ticketCount > 0) {
+                    ticketNewCount = ticketCount - 1;
+                }
+                ticketInput.value = ticketNewCount;
+
+                calculateTotalPrice();
+            }
+            function calculateTotalPrice(){
+                let totalCost = document.getElementById("totalCost");
+
+                let firstInputCount = document.getElementById("firstInputCount");
+                let firstInputCountNumber = parseInt(firstInputCount.value);
+
+                let secondInputCount = document.getElementById("secondInputCount");
+                let secondInputCountNumber = parseInt(secondInputCount.value);
+
+                let totalCostOfTicket = firstInputCountNumber * 150 + secondInputCountNumber * 100;
+
+                totalCost.innerText = '$' + totalCostOfTicket;
+
+                let vat = document.getElementById("totalVat");
+                let totalVat = totalCostOfTicket * 0.1;
+                vat.innerText = '$' + totalVat;
+
+                let getTotal = document.getElementById("total");
+                let total = totalCostOfTicket + totalVat;
+                getTotal.innerText = '$' + total;
+            }
+
+            document.getElementById("checkout").addEventListener("click", function(){
+                let firstInputCount = document.getElementById("firstInputCount").value;
+                let secondInputCount = document.getElementById("secondInputCount").value;
+                console.log(firstInputCount, secondInputCount);
+                if(firstInputCount > 0 && secondInputCount > 0){
+                    alert("Successfully purchased");
+                }
+                
+            })
+        </script>
+
+
 </body>
 
 </html>
