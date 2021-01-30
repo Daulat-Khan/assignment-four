@@ -153,10 +153,12 @@
                 let firstInputCount = document.getElementById("firstInputCount").value;
                 let secondInputCount = document.getElementById("secondInputCount").value;
                 console.log(firstInputCount, secondInputCount);
-                if(firstInputCount > 0 && secondInputCount > 0){
+                if(firstInputCount > 0 || secondInputCount > 0){
                     alert("Successfully purchased");
                 }
-                
+                else{
+                    alert("You didn't buy any ticket")
+                }
             })
         </script>
 
